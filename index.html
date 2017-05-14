@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="img/favicon.png">
+    <title>Neimap</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Neimap -->
+    <link href="css/neimap.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+      <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="#">Neimap</a>
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Map <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul>
+        <input class="form-control mr-sm-2" type="text" placeholder="Filter results">
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+          <ul data-bind="foreach: pointOfInterestLinks" class="nav nav-pills flex-column">
+            <li class="nav-item"><a href="#" class="nav-link" data-bind="text: pointOfInterest().name, attr: { id: id }, click: selectPointOfInterest">Point of Interest</a></li>
+          </ul>
+        </nav>
+        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3 map-window" id="map"></main>
+      </div>
+    </div>
+
+
+    <!-- libraries -->
+    <script src="js/vendor/knockout-3.4.2.js"></script>
+    <script src="js/vendor/jquery-3.2.1.min.js"></script>
+    <script src="js/vendor/tether.min.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLAiQ3v9U1Yi-gVx8LdFLofezbx2tiPjo&callback=initMap&libraries=places" onerror="googleError()"></script>
+
+    <!-- app sript -->
+    <script src="js/neimap.js"></script>
+  </body>
+</html>
