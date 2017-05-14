@@ -3,7 +3,7 @@ var map;
 var selectPointOfInterest;
 
 
-// Class to represent a row in the sidebar menu
+// One row in the sidebar menu
 function PointOfInterest(id, pointOfInterest, marker) {
     var self = this;
     self.id = id;
@@ -97,9 +97,6 @@ function PointOfInterestViewModel() {
 
         //add marker to map
         self.markers[i].setMap(map);
-
-        // event listener for marker
-        //marker.addListener('click', this.activateMarker(marker, context, infowindow, i));
     }
 
     // click on link
