@@ -86,7 +86,7 @@ function PointOfInterestViewModel() {
             if (this.getAnimation() !== null) {
                 this.setAnimation(null);
             } else {
-                this.setAnimation(google.maps.Animation.BOUNCE);
+                this.setAnimation(google.maps.Animation.DROP);
             }
         });
 

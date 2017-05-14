@@ -12,7 +12,7 @@ Google Maps API
 
 https://developers.google.com/maps/documentation/javascript/markers
 
-Useful for animation timeout:
+Useful for timeouts and drop animation
 https://developers.google.com/maps/documentation/javascript/examples/marker-animations-iteration
 
 
