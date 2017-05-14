@@ -13,7 +13,7 @@ function PointOfInterest(id, pointOfInterest, marker) {
 
 
 function GoogleError() {
-    // could not load Google Maps library show user a message
+    // Could not load Google Maps library show user a message
 }
 
 
@@ -81,7 +81,7 @@ function PointOfInterestViewModel() {
 
         self.markers.push(marker);
 
-        //google.maps.event.addListener(self.markers[i],'click', function(){
+        // google.maps.event.addListener(self.markers[i],'click', function(){
         self.markers[i].addListener('click', function(){
             if (this.getAnimation() !== null) {
                 this.setAnimation(null);
@@ -95,11 +95,11 @@ function PointOfInterestViewModel() {
             new PointOfInterest(i, self.pointsOfInterest[i], self.markers[i])
         );
 
-        //add marker to map
+        // Add marker to map
         self.markers[i].setMap(map);
     }
 
-    // click on link
+    // Click on link
     selectPointOfInterest = function(link) {
         google.maps.event.trigger(link.marker, 'click');
     };
@@ -108,7 +108,7 @@ function PointOfInterestViewModel() {
 
 
 
-// called after maps api is asynchronously loaded
+// Called after maps api is asynchronously loaded
 function initMap() {
     ko.applyBindings(new PointOfInterestViewModel());
 }
