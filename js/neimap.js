@@ -62,6 +62,8 @@ function PointOfInterestViewModel() {
 
     self.mapCenter = {lat: -33.10, lng: -68.85};
 
+    self.venue = ko.observableArray([]);
+
 
 
     self.map = new google.maps.Map(document.getElementById('map'), {
@@ -126,6 +128,10 @@ function PointOfInterestViewModel() {
                 //'<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
                 //'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
                 //'</p>'+
+                '<ul data-bind="foreach: venue, visible: venue().length > 0">'+
+                '<li data-bind="value: name"/>'+
+                '</li>'+
+                '</ul>'+
                 '</div>'+
                 '</div>';
 
@@ -144,15 +150,15 @@ function PointOfInterestViewModel() {
             new PointOfInterest(i, pointsOfInterest[i], self.markers[i].marker)
         );
 
+        // Add marker to map
+        self.markers[i].marker.setMap(self.map);
 
         $.getJSON("https://api.foursquare.com/v2/venues/543412cb498e3f8059825cec?v=20170101&client_id=L5FM2XQTT5NNJO44NA1M1P1PCP4YYICJZQBMNDAV2GNOPNIZ&client_secret=1ZIPF4L3JHYAWYUGLDXLCX25RKSMXEJYMZEBZQKQ32ZX4KTO", function(allData) {
-            var fsq = $.map(allData, function(item) { return new Task(item) });
-            self.tasks(mappedTasks);
+            var mappedVenue = $.map(allData.response, function(item) { return new Venue(item) });
+            self.venue(mappedVenue);
         });
 
 
-        // Add marker to map
-        self.markers[i].marker.setMap(self.map);
     }
 
     // Click on link
@@ -161,16 +167,10 @@ function PointOfInterestViewModel() {
     };
 }
 
-
-function TaskListViewModel() {
-    // ... leave the existing code unchanged ...
-
-    // Load initial state from server, convert it to Task instances, then populate self.tasks
-    $.getJSON("https://api.foursquare.com/v2/venues/543412cb498e3f8059825cec?v=20170101&client_id=L5FM2XQTT5NNJO44NA1M1P1PCP4YYICJZQBMNDAV2GNOPNIZ&client_secret=1ZIPF4L3JHYAWYUGLDXLCX25RKSMXEJYMZEBZQKQ32ZX4KTO", function(allData) {
-        var fsq = $.map(allData, function(item) { return new Task(item) });
-        self.tasks(mappedTasks);
-    });
+function Venue(data) {
+    this.name = ko.observable(data.name);
 }
+
 
 
 // Called after maps api is asynchronously loaded
