@@ -1,13 +1,10 @@
-// Load the map
-var map;
-var selectPointOfInterest;
-
 // Point of Interest data - TODO: load POI's from server via JSON
 var pointsOfInterest = [
     {
         name: 'Zuccardi',
         lat: -32.9700846,
         lng: -68.5675192,
+        foursquare: '543412cb498e3f8059825cec',
         altDescription: 'Zuccardi main winery. Great Malbec and Bonarda',
     },
     {
@@ -36,6 +33,14 @@ var pointsOfInterest = [
     }
 ];
 
+
+var foursquare = {
+    uid: 'L5FM2XQTT5NNJO44NA1M1P1PCP4YYICJZQBMNDAV2GNOPNIZ',
+    sec: '1ZIPF4L3JHYAWYUGLDXLCX25RKSMXEJYMZEBZQKQ32ZX4KTO',
+}
+// https://api.foursquare.com/v2/venues/543412cb498e3f8059825cec?v=20170101&client_id=L5FM2XQTT5NNJO44NA1M1P1PCP4YYICJZQBMNDAV2GNOPNIZ&client_secret=1ZIPF4L3JHYAWYUGLDXLCX25RKSMXEJYMZEBZQKQ32ZX4KTO
+
+
 // One row in the sidebar menu
 function PointOfInterest(id, pointOfInterest, marker) {
     var self = this;
@@ -49,18 +54,17 @@ function GoogleError() {
     // Could not load Google Maps library show user a message
 }
 
-
 //  Viewmodel
 function PointOfInterestViewModel() {
     var self = this;
-    var map;
+    self.map;
     self.infowindow = {};
 
     self.mapCenter = {lat: -33.10, lng: -68.85};
 
 
 
-    map = new google.maps.Map(document.getElementById('map'), {
+    self.map = new google.maps.Map(document.getElementById('map'), {
         center: self.mapCenter,
         zoom: 10
     });
@@ -75,7 +79,7 @@ function PointOfInterestViewModel() {
     for (var i = 0, len = pointsOfInterest.length; i < len; i ++) {
         var location = {lat: pointsOfInterest[i].lat, lng: pointsOfInterest[i].lng};
         var marker = new google.maps.Marker({
-            map: map,
+            map: self.map,
             position: location,
             // title appears as a tooltip on map
             title: pointsOfInterest[i].name,
@@ -94,7 +98,9 @@ function PointOfInterestViewModel() {
 
         // google.maps.event.addListener(self.markers[i],'click', function(){
         self.markers[i].marker.addListener('click', function(){
-            bouncingMarker = this
+            var bouncingMarker = this
+
+            //self.map.setCenter(bouncingMarker.position);
 
             var label = bouncingMarker.title.charAt(0);
             // labels do not bounce with marker so remove it temporarely
@@ -127,7 +133,10 @@ function PointOfInterestViewModel() {
                 content: contentString,
             });
 
-            self.infowindow.open(map, bouncingMarker);
+            // Recenter the map
+            self.map.setCenter(new google.maps.LatLng(bouncingMarker.position.lat(), bouncingMarker.position.lng()));
+            // Open the info window
+            self.infowindow.open(self.map, bouncingMarker);
         });
 
 
@@ -135,20 +144,39 @@ function PointOfInterestViewModel() {
             new PointOfInterest(i, pointsOfInterest[i], self.markers[i].marker)
         );
 
+
+        $.getJSON("https://api.foursquare.com/v2/venues/543412cb498e3f8059825cec?v=20170101&client_id=L5FM2XQTT5NNJO44NA1M1P1PCP4YYICJZQBMNDAV2GNOPNIZ&client_secret=1ZIPF4L3JHYAWYUGLDXLCX25RKSMXEJYMZEBZQKQ32ZX4KTO", function(allData) {
+            var fsq = $.map(allData, function(item) { return new Task(item) });
+            self.tasks(mappedTasks);
+        });
+
+
         // Add marker to map
-        self.markers[i].marker.setMap(map);
+        self.markers[i].marker.setMap(self.map);
     }
 
     // Click on link
     selectPointOfInterest = function(link) {
         google.maps.event.trigger(link.marker, 'click');
     };
-
 }
 
+
+function TaskListViewModel() {
+    // ... leave the existing code unchanged ...
+
+    // Load initial state from server, convert it to Task instances, then populate self.tasks
+    $.getJSON("https://api.foursquare.com/v2/venues/543412cb498e3f8059825cec?v=20170101&client_id=L5FM2XQTT5NNJO44NA1M1P1PCP4YYICJZQBMNDAV2GNOPNIZ&client_secret=1ZIPF4L3JHYAWYUGLDXLCX25RKSMXEJYMZEBZQKQ32ZX4KTO", function(allData) {
+        var fsq = $.map(allData, function(item) { return new Task(item) });
+        self.tasks(mappedTasks);
+    });
+}
 
 
 // Called after maps api is asynchronously loaded
 function initMap() {
     ko.applyBindings(new PointOfInterestViewModel());
 }
+
+
+
