@@ -94,9 +94,10 @@ var NeimapViewModel = function() {
 
 
     // Now only show the markers needed and return a filtered list.
-    self.FilteredPointOfInterests =  ko.computed(function() {
+    self.filteredPointOfInterests =  ko.computed(function() {
         return self.pointOfInterests().filter(function(poi) {
-            var isMatched = poi.name.indexOf(self.filterSearch()) !== -1;
+            lowerCaseName = poi.name.toLowerCase();
+            var isMatched = lowerCaseName.indexOf(self.filterSearch().toLowerCase()) !== -1;
             poi.marker.setVisible(isMatched);
             return isMatched;
         }, this);
