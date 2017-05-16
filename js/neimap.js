@@ -5,35 +5,35 @@ var pointsOfInterest = [
         lat: -32.9700846,
         lng: -68.5675192,
         foursquare: '543412cb498e3f8059825cec',
-        altDescription: 'Zuccardi winery in Maipu. Great Malbec and Bonarda',
+        altDescription: 'Zuccardi bodega in Maipu. Great Malbec and Bonarda',
     },
     {
         name: 'Lopez',
         lat: -32.962649,
         lng: -68.786521,
         foursquare: '4c7dae7701589521ccaf0363',
-        altDescription: 'Lopez winery in Maipu. Good Malbecs. ',
+        altDescription: 'Lopez bodega in Maipu. Good Malbecs. ',
     },
     {
         name: 'Salentein',
         lat: -33.2863936,
         lng: -69.1479992,
         foursquare: '4c6951eb35d3be9af2f21e06',
-        altDescription: 'Salentein winery in Tunuyán. Great reds.',
+        altDescription: 'Salentein bodega in Tunuyán. Great reds.',
     },
     {
         name: 'SinFin',
         lat: -32.9755586,
         lng: -68.7014326,
         foursquare: '52053f7704931e0e1ac82125',
-        altDescription: 'SinFin winery. Good Malbecs and a great Grappa.',
+        altDescription: 'SinFin bodega. Good Malbecs and a great Grappa.',
     },
     {
         name: 'Vistandes',
         lat: -33.0246466,
         lng: -68.7715359,
         foursquare: '4d8f4c741716a143e2ce46f7',
-        altDescription: 'Vistandes winery in Maipu. Popular location for bike tours.',
+        altDescription: 'Vistandes bodega in Maipu. Popular location for bike tours.',
     }
 ];
 
@@ -87,8 +87,9 @@ var NeimapViewModel = function() {
     self.mapCenter = {lat: -33.10, lng: -68.85};
     //self.pointsOfInterest = pointsOfInterest;
 
-    // Array for venue (JSON response data)
-    //self.venue = ko.observableArray();
+
+    self.filter = ko.observable();
+
 
     // Array to hold links for sidebar menu
     self.pointOfInterests = ko.observableArray();
@@ -101,7 +102,7 @@ var NeimapViewModel = function() {
     // Center map
     map = new google.maps.Map(document.getElementById('map'), {
         center: self.mapCenter,
-        zoom: 10
+        zoom: 9
     });
 
     // Array to push markers
@@ -132,11 +133,8 @@ var NeimapModel = function(poiData) {
 
     self.name = poiData.name;
     self.id = poiData.id;
-    //self.pointOfInterest = poiData;
 
     self.contentFoursquare = ko.observable();
-
-    //var infowindow = {};
 
 
     // Retreive data about venue from foursquare API in JSON format
@@ -148,7 +146,7 @@ var NeimapModel = function(poiData) {
             '</div>'+
             '<h1 id="firstHeading" class="firstHeading">' + mappedVenue[0].name + '</h1>' +
             '<div id="bodyContent">'+
-            '<p>' + mappedVenue[0].address + '</p>'+
+            '<p>' + poiData.altDescription + '<br>' + mappedVenue[0].address + '</p>'+
             '<div class="image-list">';
 
 
@@ -167,7 +165,19 @@ var NeimapModel = function(poiData) {
             self.contentFoursquare(contentString);
 
     }).fail(function() {
-        self.contentFoursquare('Could not load info from Foursquare. Internet down?');
+        // Could not connect to Foursquare -> load some simple content into the infowindow
+        var contentString = '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h1 id="firstHeading" class="firstHeading">' + poiData.name + '</h1>' +
+            '<div id="bodyContent">'+
+            '<p>' + poiData.altDescription + '</p>'+
+            '</div>'+
+            '<p><i>Could not load additionl data about venue from Foursquare. Internet down?</i></p>'+
+            '</div>'+
+            '</div>';
+            self.contentFoursquare(contentString);
+
     });
 
 
