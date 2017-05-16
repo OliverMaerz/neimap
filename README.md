@@ -1,11 +1,10 @@
 # neimap - Neighborhood Map Application
 
-##Installation:
+## Installation:
 To run the application clone the repository and open the file index.html with any modern javascript enabled browser. 
 
 
-##Libraries used
-
+## Libraries
 Bootstrap: https://v4-alpha.getbootstrap.com/getting-started/introduction/
 Tether: http://tether.io/
 jQuery: https://jquery.com/
@@ -26,7 +25,6 @@ https://developers.google.com/maps/documentation/javascript/infowindows
 
 
 ## stackoverflow topics:
-
 http://stackoverflow.com/questions/6611634/google-maps-api-v3-add-event-listener-to-all-markers
 
 
@@ -46,12 +44,10 @@ https://discussions.udacity.com/t/filtering-google-maps-markers-with-list-view/3
 
 
 ## Udacity resources
-
 https://github.com/udacity/fend-office-hours/tree/master/Javascript%20Design%20Patterns/P5%20Project%20Overview
 
 
 ## Foursquare resources 
-
 https://apigee.com/console/foursquare
 https://developer.foursquare.com/docs/responses/photo
 
