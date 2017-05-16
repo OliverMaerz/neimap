@@ -76,7 +76,7 @@ function InitMap() {
 
 function GoogleError() {
     // Could not load Google Maps library show user a message
-    alert('Could not connect to Google Maps. No Internet???');
+    $('main').text('Sorry. Could not connect to Google Maps. No Internet???');
 }
 
 
