@@ -47,6 +47,9 @@ var foursquare = {
 // Global variable for map (so model and viewmodel have access)
 var map;
 
+// Global variable for open infowindow (so model code can close it)
+var infowindow;
+
 // Venue data for JSON API call
 function Venue(data) {
     this.name = data.name;
@@ -133,7 +136,7 @@ var NeimapModel = function(poiData) {
 
     self.contentFoursquare = ko.observable();
 
-    var infowindow = {};
+    //var infowindow = {};
 
 
     // Retreive data about venue from foursquare API in JSON format
@@ -146,9 +149,6 @@ var NeimapModel = function(poiData) {
             '<h1 id="firstHeading" class="firstHeading">' + mappedVenue[0].name + '</h1>' +
             '<div id="bodyContent">'+
             '<p>' + mappedVenue[0].address + '</p>'+
-            '<p>Attribution: Information about venue by <a href="https://www.foursquare.com/'+
-            '">Foursquare</a>. Map data from <a href="https://maps.google.com">Google Maps</a>.'+
-            '</p>'+
             '<div class="image-list">';
 
 
@@ -159,6 +159,9 @@ var NeimapModel = function(poiData) {
 
         contentString +=
             '</div>'+
+            '<p>Attribution: Information about venue by <a href="https://www.foursquare.com/'+
+            '">Foursquare</a>. Map data from <a href="https://maps.google.com">Google Maps</a>.'+
+            '</p>'+
             '</div>'+
             '</div>';
             self.contentFoursquare(contentString);
@@ -194,7 +197,7 @@ var NeimapModel = function(poiData) {
                 bouncingMarker.setLabel(label);
             }, 650);
 
-        if(infowindow.open) {
+        if ((infowindow) && (infowindow.open)) {
             infowindow.close();
         }
 

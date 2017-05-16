@@ -12,7 +12,7 @@ body {
  */
 .sidebar {
   position: fixed;
-  top: 56px;
+  top: 54px;
   bottom: 0;
   left: 0;
   z-index: 1000;
@@ -49,7 +49,15 @@ body {
  */
 .map-window {
   position: fixed !important;
-  top:  56px;
+  top:  54px;
   bottom: 0;
   left: 0;
+}
+
+
+/*
+ * Map
+ */
+.image-list {
+  min-height: 100px;
 }
