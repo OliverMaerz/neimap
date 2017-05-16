@@ -59,22 +59,13 @@ function Venue(data) {
 }
 
 
-// One row in the sidebar menu
-function PointOfInterest(id, pointOfInterest, marker) {
-    var self = this;
-    self.id = id;
-    self.pointOfInterest = ko.observable(pointOfInterest);
-    self.marker = marker;
-}
-
-
 // Called after maps api is asynchronously loaded
-function InitMap() {
+function initMap() {
     ko.applyBindings(new NeimapViewModel());
 }
 
 
-function GoogleError() {
+function googleError() {
     // Could not load Google Maps library show user a message
     $('main').text('Sorry. Could not connect to Google Maps. No Internet???');
 }
@@ -102,11 +93,6 @@ var NeimapViewModel = function() {
             return isMatched;
         }, this);
     }, this);
-
-    // Object to hold content for info window
-    //var Content = function (html) {
-    //    this.html = html;
-    //};
 
     // Center map
     map = new google.maps.Map(document.getElementById('map'), {
@@ -180,7 +166,6 @@ var NeimapModel = function(poiData) {
             '</div>'+
             '</div>';
             self.contentFoursquare(contentString);
-
     });
 
 
@@ -208,7 +193,7 @@ var NeimapModel = function(poiData) {
                 bouncingMarker.setAnimation(null);
                 // Now restore the original label
                 bouncingMarker.setLabel(label);
-            }, 650);
+            }, 700);
 
         if ((infowindow) && (infowindow.open)) {
             infowindow.close();
@@ -224,25 +209,8 @@ var NeimapModel = function(poiData) {
         infowindow.open(map, bouncingMarker);
     });
 
-
-    // Store in array of markers
-    //self.markers.push(
-    //    {
-    //        marker: marker,
-    //        id: i,
-    //    }
-    //);
-
-
-
     // Add marker to map
     self.marker.setMap(map);
-
-    //self.pointOfInterestLinks.push(
-    //    new PointOfInterest(i, poiData, self.marker)
-    //);
-
-
 }
 
 
