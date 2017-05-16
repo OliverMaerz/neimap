@@ -69,7 +69,7 @@ function PointOfInterest(id, pointOfInterest, marker) {
 
 
 // Called after maps api is asynchronously loaded
-function initMap() {
+function InitMap() {
     ko.applyBindings(new NeimapViewModel());
 }
 
@@ -85,29 +85,33 @@ var NeimapViewModel = function() {
     var self = this;
 
     self.mapCenter = {lat: -33.10, lng: -68.85};
-    //self.pointsOfInterest = pointsOfInterest;
-
-
-    self.filter = ko.observable();
-
 
     // Array to hold links for sidebar menu
     self.pointOfInterests = ko.observableArray();
 
+    // Filter input text field
+    self.filterSearch = ko.observable('');
+
+
+    // Now only show the markers needed and return a filtered list.
+    self.FilteredPointOfInterests =  ko.computed(function() {
+        return self.pointOfInterests().filter(function(poi) {
+            var isMatched = poi.name.indexOf(self.filterSearch()) !== -1;
+            poi.marker.setVisible(isMatched);
+            return isMatched;
+        }, this);
+    }, this);
+
     // Object to hold content for info window
-    var Content = function (html) {
-        this.html = html;
-    };
+    //var Content = function (html) {
+    //    this.html = html;
+    //};
 
     // Center map
     map = new google.maps.Map(document.getElementById('map'), {
         center: self.mapCenter,
         zoom: 9
     });
-
-    // Array to push markers
-    //self.markers = [];
-    //self.bouncingMarker = [];
 
     // Loop over array and set markers
     for (var i = 0, len = pointsOfInterest.length; i < len ; i ++) {
@@ -129,11 +133,10 @@ var NeimapViewModel = function() {
 var NeimapModel = function(poiData) {
     var self = this;
 
-    // data needed in poiData: foursquare venue id,
-
     self.name = poiData.name;
     self.id = poiData.id;
 
+    // Content for infowindow
     self.contentFoursquare = ko.observable();
 
 
@@ -144,11 +147,10 @@ var NeimapModel = function(poiData) {
         var contentString = '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">' + mappedVenue[0].name + '</h1>' +
+            '<h2 id="firstHeading" class="firstHeading">' + mappedVenue[0].name + '</h2>' +
             '<div id="bodyContent">'+
             '<p>' + poiData.altDescription + '<br>' + mappedVenue[0].address + '</p>'+
             '<div class="image-list">';
-
 
         // Add images from photos array
         for (var j = 0, len = mappedVenue[0].photos.length; (j < len) && (j < 2); j++) {
@@ -157,19 +159,19 @@ var NeimapModel = function(poiData) {
 
         contentString +=
             '</div>'+
-            '<p>Attribution: Information about venue by <a href="https://www.foursquare.com/'+
-            '">Foursquare</a>. Map data from <a href="https://maps.google.com">Google Maps</a>.'+
+            '<p>Attribution: Venue information <a href="https://www.foursquare.com/'+
+            '">Foursquare</a>.<br>Map data <a href="https://maps.google.com">Google Maps</a>.'+
             '</p>'+
             '</div>'+
             '</div>';
             self.contentFoursquare(contentString);
 
     }).fail(function() {
-        // Could not connect to Foursquare -> load some simple content into the infowindow
+        // Could not connect to Foursquare -> load some simple content into the infowindow with a message
         var contentString = '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">' + poiData.name + '</h1>' +
+            '<h2 id="firstHeading" class="firstHeading">' + poiData.name + '</h2>' +
             '<div id="bodyContent">'+
             '<p>' + poiData.altDescription + '</p>'+
             '</div>'+

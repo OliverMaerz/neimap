@@ -28,18 +28,18 @@
           <li class="nav-item">
             <a class="nav-link" href="#">About</a>
           </li>-->
-        <ul class="navbar-nav mr-auto hidden-md-up" data-bind="foreach: pointOfInterests" class="nav nav-pills flex-column">
+        <ul class="navbar-nav mr-auto hidden-md-up" data-bind="foreach: FilteredPointOfInterests" class="nav nav-pills flex-column">
             <li class="nav-item"><a href="#" class="nav-link" data-bind="text: name, attr: { id: id }, click: selectPointOfInterest"> </a></li>
         </ul>
         </ul>
-        <input class="form-control mr-sm-2" data-bind="textInput: filter" name="filter" type="text" placeholder="Filter">
+        <input class="form-control mr-sm-2" data-bind="textInput: filterSearch, valueUpdate: 'afterkeydown'" name="filter" type="text" placeholder="Filter">
       </div>
     </nav>
 
     <div class="container-fluid">
       <div class="row">
         <nav class="col-md-2 hidden-sm-down bg-faded sidebar">
-          <ul data-bind="foreach: pointOfInterests" class="nav nav-pills flex-column">
+          <ul data-bind="foreach: FilteredPointOfInterests" class="nav nav-pills flex-column">
             <li class="nav-item"><a href="#" class="nav-link" data-bind="text: name, attr: { id: id }, click: selectPointOfInterest"> </a></li>
           </ul>
         </nav>
@@ -52,7 +52,7 @@
     <script src="js/vendor/jquery-3.2.1.min.js"></script>
     <script src="js/vendor/tether.min.js"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLAiQ3v9U1Yi-gVx8LdFLofezbx2tiPjo&callback=initMap&libraries=places" onerror="googleError()"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLAiQ3v9U1Yi-gVx8LdFLofezbx2tiPjo&callback=InitMap&libraries=places" onerror="googleError()"></script>
 
     <!-- app sript -->
     <script src="js/neimap.js"></script>
