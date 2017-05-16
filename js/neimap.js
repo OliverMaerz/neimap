@@ -146,8 +146,9 @@ var NeimapModel = function(poiData) {
 
         contentString +=
             '</div>'+
-            '<p>Attribution: Venue information <a href="https://www.foursquare.com/'+
-            '">Foursquare</a>.<br>Map data <a href="https://maps.google.com">Google Maps</a>.'+
+            '<p>Venue information powered by  <a href="https://foursquare.com/v/'+
+            poiData.foursquare + '?ref=L5FM2XQTT5NNJO44NA1M1P1PCP4YYICJZQBMNDAV2GNOPNIZ'+
+            '">Foursquare API</a>.<br>Map data ©2017 <a href="https://maps.google.com">Google</a>.'+
             '</p>'+
             '</div>'+
             '</div>';
