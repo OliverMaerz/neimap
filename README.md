@@ -24,7 +24,7 @@ http://stackoverflow.com/questions/7339200/bounce-a-pin-in-google-maps-once
 https://developers.google.com/maps/documentation/javascript/infowindows
 
 
-## stackoverflow topics:
+## Stackoverflow topics:
 http://stackoverflow.com/questions/6611634/google-maps-api-v3-add-event-listener-to-all-markers
 
 
