@@ -28,19 +28,19 @@
           <li class="nav-item">
             <a class="nav-link" href="#">About</a>
           </li>-->
-        <ul class="navbar-nav mr-auto hidden-md-up" data-bind="foreach: pointOfInterestLinks" class="nav nav-pills flex-column">
-            <li class="nav-item"><a href="#" class="nav-link" data-bind="text: pointOfInterest().name, attr: { id: id }, click: selectPointOfInterest"> </a></li>
+        <ul class="navbar-nav mr-auto hidden-md-up" data-bind="foreach: pointOfInterests" class="nav nav-pills flex-column">
+            <li class="nav-item"><a href="#" class="nav-link" data-bind="text: name, attr: { id: id }, click: selectPointOfInterest"> </a></li>
         </ul>
         </ul>
-        <input class="form-control mr-sm-2" type="text" placeholder="Filter results">
+        <input class="form-control mr-sm-2" type="text" placeholder="Filter">
       </div>
     </nav>
 
     <div class="container-fluid">
       <div class="row">
         <nav class="col-md-2 hidden-sm-down bg-faded sidebar">
-          <ul data-bind="foreach: pointOfInterestLinks" class="nav nav-pills flex-column">
-            <li class="nav-item"><a href="#" class="nav-link" data-bind="text: pointOfInterest().name, attr: { id: id }, click: selectPointOfInterest"> </a></li>
+          <ul data-bind="foreach: pointOfInterests" class="nav nav-pills flex-column">
+            <li class="nav-item"><a href="#" class="nav-link" data-bind="text: name, attr: { id: id }, click: selectPointOfInterest"> </a></li>
           </ul>
         </nav>
         <main class="col-md-10 offset-md-2 pt-3 map-window" id="map"></main>
