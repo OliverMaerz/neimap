@@ -2,6 +2,7 @@
 
 ## Installation:
 To run the application clone the repository and open the file index.html with any modern javascript enabled browser. 
+A live version is available at: https://olivermaerz.com/neimap/
 
 
 ## Libraries
